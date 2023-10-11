@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CAPPPARCIAL2_H
-#define CAPPPARCIAL2_H
+#ifndef CAPPPARCIAL1_H
+#define CAPPPARCIAL1_H
 
 #include "Globals.h"
 #include "CApp.h"
@@ -12,7 +12,7 @@
 // Class that inherits from Base class CApp
 // Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
 // --------------------------------------------------------------------------------------------------------------------------------------
-class CAppParcial2 : public CApp
+class CAppParcial1 : public CApp
 {
 private:
 
@@ -30,9 +30,9 @@ protected:
 
 public:
 	// Constructors and destructor
-	CAppParcial2();
-	CAppParcial2(int window_width, int window_height);
-	~CAppParcial2();
+	CAppParcial1();
+	CAppParcial1(int window_width, int window_height);
+	~CAppParcial1();
 
 	// --------------------------------------------------------------------------------------------------------------------------
 	// Inherited methods from CApp
@@ -82,4 +82,4 @@ private:
 	unsigned int geometryID;
 };
 
-#endif // !CAPPPARCIAL2_H
+#endif // !CAPPEMPTY_H

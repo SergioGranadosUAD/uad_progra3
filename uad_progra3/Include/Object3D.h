@@ -16,7 +16,18 @@ class Object3D {
 public:
 	Object3D();
 	virtual ~Object3D();
-	void loadFile(const std::string& fileName);
+	bool loadFile(const std::string& fileName);
+
+	std::vector<float>* getVertexValues() { return &mVertexValues; };
+	std::vector<float>* getNormalValues() { return &mNormalValues; };
+	std::vector<float>* getUVCoordValues() { return &mUVCoordValues; };
+	std::vector<unsigned short>* getVertexIndexValues() { return &mVertexIndexValues; };
+	std::vector<unsigned short>* getNormalIndexValues() { return &mNormalIndexValues; };
+	std::vector<unsigned short>* getUVCoordIndexValues() { return &mUvCoordIndexValues; };
+	std::vector<std::string>* getMaterialNameValues() { return &mMaterialNameValues; };
+	std::vector<std::string>* getTextureNameValues() { return &mTextureNameValues; };
+	bool hasTextures() const { return mHasTextures; };
+	bool hasUVs() const { return mHasUVCoords; };
 
 private:
 	void readVertexValues(std::stringstream& sstream);
@@ -28,14 +39,16 @@ private:
 
 	const int TRIANGLE_VERTEX_COUNT = 3;
 
-	bool mHasUVCoords = false;
+	//Cambiar
+	bool mHasUVCoords = true;
+
 	bool mHasTextures = false;
 	std::vector<float> mVertexValues;
 	std::vector<float> mNormalValues;
 	std::vector<float> mUVCoordValues;
-	std::vector<unsigned int> mVertexIndexValues;
-	std::vector<unsigned int> mNormalIndexValues;
-	std::vector<unsigned int> mUvCoordIndexValues;
+	std::vector<unsigned short> mVertexIndexValues;
+	std::vector<unsigned short> mNormalIndexValues;
+	std::vector<unsigned short> mUvCoordIndexValues;
 	std::vector<std::string> mMaterialNameValues;
 	std::vector<std::string> mTextureNameValues;
 	std::vector<unsigned int> mTextureIndexValue;

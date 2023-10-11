@@ -4,6 +4,7 @@
 #include "stdafx.h"
 
 #include <iostream>
+
 using namespace std;
 
 #include "Include/CApp.h"
@@ -11,11 +12,13 @@ using namespace std;
 #include "Include/CAppObjLoader.h"
 #include "Include/CAppGeometricFigures.h"
 #include "Include/CAppEmpty.h"
+#include "Include/CAppParcial1.h"
+#include "Include/CAppParcial2.h"
 
 int main()
 {
 	CApp *app = NULL;					// Pointer to BASE class CApp
-	app = new CAppEmpty(800, 600);		// Using pointer to base class, create a new object of DERIVED class
+	app = new CAppParcial2(800, 600);		// Using pointer to base class, create a new object of DERIVED class
 	app->run();							// Run the app
 	delete app;							// Delete pointer
 	app = NULL;							// Set pointer to NULL

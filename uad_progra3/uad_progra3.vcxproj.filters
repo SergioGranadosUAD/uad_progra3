@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Helpers">
       <UniqueIdentifier>{a548ce66-7199-4e73-8d1f-73a12c879a06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\OBJParser">
+      <UniqueIdentifier>{b4e0c4b3-82de-4fc1-8a17-8b065a8673f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OBJParser">
+      <UniqueIdentifier>{fa9ff27f-fe2b-4aa4-b374-5e235be6ea69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -147,6 +153,15 @@
     <ClInclude Include="Include\CLight.h">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CAppParcial1.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Object3D.h">
+      <Filter>Header Files\OBJParser</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CAppParcial2.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -214,6 +229,15 @@
     </ClCompile>
     <ClCompile Include="Source\CLight.cpp">
       <Filter>Source Files\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CAppParcial1.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object3D.cpp">
+      <Filter>Source Files\OBJParser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CAppParcial2.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

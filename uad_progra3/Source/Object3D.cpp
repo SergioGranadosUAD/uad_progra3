@@ -1,4 +1,4 @@
-#include "Object3D.h"
+#include "../Include/Object3D.h"
 
 Object3D::Object3D() {
 
@@ -8,7 +8,7 @@ Object3D::~Object3D() {
 
 }
 
-void Object3D::loadFile(const std::string& fileName) {
+bool Object3D::loadFile(const std::string& fileName) {
 	std::ifstream file(fileName);
 	std::string line;
 	//int materialFaceCount = 0;
@@ -40,6 +40,9 @@ void Object3D::loadFile(const std::string& fileName) {
 			}
 		}
 	}
+
+	//Cambiar
+	return true;
 }
 
 void Object3D::readVertexValues(std::stringstream& sstream) {
@@ -99,9 +102,9 @@ void Object3D::buildFace(std::stringstream& sstream) {
 
 	if (vertexList.size() == TRIANGLE_VERTEX_COUNT) {
 		for (int i = 0; i < vertexList.size(); i++) {
-			mVertexIndexValues.push_back(vertexList[i].vertexIndex);
-			mUvCoordIndexValues.push_back(vertexList[i].uVCoordIndex);
-			mNormalIndexValues.push_back(vertexList[i].normalIndex);
+			mVertexIndexValues.push_back(vertexList[i].vertexIndex-1);
+			mUvCoordIndexValues.push_back(vertexList[i].uVCoordIndex-1);
+			mNormalIndexValues.push_back(vertexList[i].normalIndex-1);
 		}
 	}
 	else if (vertexList.size() > TRIANGLE_VERTEX_COUNT) {
@@ -147,17 +150,17 @@ void Object3D::TriangulateFace(const std::vector<VertexValues>& vertexList) {
 		middleVertex = vertexList[i + 1];
 		lastVertex = vertexList[i + 2];
 
-		mVertexIndexValues.push_back(pivotVertex.vertexIndex);
-		mUvCoordIndexValues.push_back(pivotVertex.uVCoordIndex);
-		mNormalIndexValues.push_back(pivotVertex.normalIndex);
+		mVertexIndexValues.push_back(pivotVertex.vertexIndex-1);
+		mUvCoordIndexValues.push_back(pivotVertex.uVCoordIndex-1);
+		mNormalIndexValues.push_back(pivotVertex.normalIndex-1);
 
-		mVertexIndexValues.push_back(middleVertex.vertexIndex);
-		mUvCoordIndexValues.push_back(middleVertex.uVCoordIndex);
-		mNormalIndexValues.push_back(middleVertex.normalIndex);
+		mVertexIndexValues.push_back(middleVertex.vertexIndex-1);
+		mUvCoordIndexValues.push_back(middleVertex.uVCoordIndex-1);
+		mNormalIndexValues.push_back(middleVertex.normalIndex-1);
 
-		mVertexIndexValues.push_back(lastVertex.vertexIndex);
-		mUvCoordIndexValues.push_back(lastVertex.uVCoordIndex);
-		mNormalIndexValues.push_back(lastVertex.normalIndex);
+		mVertexIndexValues.push_back(lastVertex.vertexIndex-1);
+		mUvCoordIndexValues.push_back(lastVertex.uVCoordIndex-1);
+		mNormalIndexValues.push_back(lastVertex.normalIndex-1);
 	}
 
 }
