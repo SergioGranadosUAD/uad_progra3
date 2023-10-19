@@ -36,7 +36,7 @@ protected:
 public:
 	// Constructors and VIRTUAL destructor
 	CApp();
-	CApp(int window_width, int window_height);
+	CApp(int window_width, int window_height, bool fullscreen);
 	virtual ~CApp();
 
 	bool canRun() const;                                  // Can the app run?

@@ -38,6 +38,7 @@ private:
 	string       m_WindowTitle;            // Title 
 	double       m_CursorPosX;
 	double       m_CursorPosY;
+	bool		 m_Fullscreen;			   //Is window in Fullscreen mode
 
 	                                       // Generic variables for F1..F12 keys, CApp derived class decides what to do for F2..F11
 	static bool requestF1;                 // F1 always toggles the menu on/off
@@ -87,7 +88,7 @@ private:
 public:
 	// Constructors and Destructor
 	CGameWindow(COpenGLRenderer * renderer);
-	CGameWindow(COpenGLRenderer * renderer, int width, int height);
+	CGameWindow(COpenGLRenderer * renderer, int width, int height, bool fullscreen);
 	~CGameWindow();
 
 	// Create a window

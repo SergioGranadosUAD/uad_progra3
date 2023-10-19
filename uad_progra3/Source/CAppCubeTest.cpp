@@ -15,14 +15,14 @@ using namespace std;
 
 /* */
 CAppCubeTest::CAppCubeTest() :
-	CAppCubeTest(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT) // C++11 ability to call one constructor from another
+	CAppCubeTest(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false) // C++11 ability to call one constructor from another
 {
 	cout << "Constructor: CAppCubeTest()" << endl;
 }
 
 /* */
-CAppCubeTest::CAppCubeTest(int window_width, int window_height) :
-	CApp(window_width, window_height),
+CAppCubeTest::CAppCubeTest(int window_width, int window_height, bool fullscreen) :
+	CApp(window_width, window_height, fullscreen),
 	m_currentDeltaTime{ 0.0 },
 	m_objectRotation{ 0.0 },
 	m_objectPosition{ 0.0f, 0.0f, 0.0f },

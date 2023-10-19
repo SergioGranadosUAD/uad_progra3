@@ -51,7 +51,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppCubeTest();
-	CAppCubeTest(int window_width, int window_height);
+	CAppCubeTest(int window_width, int window_height, bool fullscreen);
 	~CAppCubeTest();
 
 	// Inherited methods from CApp

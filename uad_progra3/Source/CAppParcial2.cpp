@@ -9,16 +9,17 @@ using namespace std;
 #include "../Include/CAppParcial2.h"
 #include "../Include/Object3D.h"
 #include "../Include/CTextureLoader.h"
+#include "../Include/MathHelper.h"
 
 /* */
 CAppParcial2::CAppParcial2() :
-	CAppParcial2(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CAppParcial2(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
 {
 }
 
 /* */
-CAppParcial2::CAppParcial2(int window_width, int window_height) :
-	CApp(window_width, window_height)
+CAppParcial2::CAppParcial2(int window_width, int window_height, bool fullscreen) :
+	CApp(window_width, window_height, fullscreen)
 {
 	cout << "Constructor: CAppEmpty(int window_width, int window_height)" << endl;
 
@@ -84,6 +85,14 @@ void CAppParcial2::update(double deltaTime)
 		return;
 	}
 
+	double degrees = mRotationSpeed * deltaTime * 0.001f;
+
+	mCurrentRotation += degrees;
+
+	if (mCurrentRotation > 360.0f) {
+		mCurrentRotation -= 360.0f;
+	}
+
 	// Update app-specific stuff here
 	// ===============================
 	//
@@ -104,14 +113,20 @@ void CAppParcial2::render()
 	}
 	else // Otherwise, render app-specific stuff here...
 	{
+		double mCurrentRadians = mCurrentRotation * PI_OVER_180;
 		// =================================
 		//
 		// =================================
 
 		// Get a matrix that has both the object rotation and translation
-		CVector3 objectPosition = CVector3::ZeroVector();
+		CVector3 objectPosition = mCurrentPosition;
+		objectPosition.X -= 5.0f;
 
-		MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrixRotationTranslation((float)0.0, objectPosition);
+		MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrixRotationTranslation((float)mCurrentRadians, objectPosition);
+		MathHelper::Matrix4 translationMatrix = MathHelper::TranslationMatrix(mCurrentPosition.X, mCurrentPosition.Y, mCurrentPosition.Z);
+		MathHelper::Matrix4 rotationMatrix = MathHelper::RotAroundY(mCurrentRadians);
+
+		MathHelper::Matrix4 modelMatrixSoldier = MathHelper::Multiply(rotationMatrix, translationMatrix);
 
 		unsigned int modelShader = currentShaderID;
 		unsigned int modelVAO = geometryID;
@@ -124,10 +139,22 @@ void CAppParcial2::render()
 			&modelTexture,
 			mObject.getVertexIndexValues()->size() / 3,
 			color,
+			&modelMatrixSoldier,
+			COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
+			false
+		);
+
+		getOpenGLRenderer()->renderObject(
+			&modelShader,
+			&modelVAO,
+			&modelTexture,
+			mObject.getVertexIndexValues()->size() / 3,
+			color,
 			&modelMatrix,
 			COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
 			false
 		);
+		
 	}
 }
 

@@ -31,7 +31,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppParcial1();
-	CAppParcial1(int window_width, int window_height);
+	CAppParcial1(int window_width, int window_height, bool fullscreen);
 	~CAppParcial1();
 
 	// --------------------------------------------------------------------------------------------------------------------------

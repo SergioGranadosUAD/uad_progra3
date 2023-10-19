@@ -15,10 +15,51 @@ using namespace std;
 #include "Include/CAppParcial1.h"
 #include "Include/CAppParcial2.h"
 
-int main()
+int main(int argc, char** argv)
 {
+	int resWidth;
+	int resHeight;
+	bool isFullscreen;
+	std::string videoMode;
+	std::string className;
+	if (argc > 1) {
+		resWidth = stoi(argv[1]);
+		resHeight = stoi(argv[2]);
+		videoMode = argv[3];
+		className = argv[4];
+	}
+	else {
+		resWidth = 800;
+		resHeight = 600;
+		videoMode = "Windowed";
+		className = "CAppParcial2";
+	}
+
+	if (videoMode == "Windowed") {
+		isFullscreen = false;
+	}
+	else {
+		isFullscreen = true;
+	}
+
 	CApp *app = NULL;					// Pointer to BASE class CApp
-	app = new CAppParcial2(800, 600);		// Using pointer to base class, create a new object of DERIVED class
+
+	if (className == "CAppCubeTest") {
+		app = new CAppCubeTest(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
+	}
+	else if (className == "CAppObjLoader") {
+		app = new CAppObjLoader(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
+	}
+	else if (className == "CAppGeometricFigures") {
+		app = new CAppGeometricFigures(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
+	}
+	else if (className == "CAppParcial1") {
+		app = new CAppParcial1(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
+	}
+	else if (className == "CAppParcial2") {
+		app = new CAppParcial2(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
+	}
+	
 	app->run();							// Run the app
 	delete app;							// Delete pointer
 	app = NULL;							// Set pointer to NULL

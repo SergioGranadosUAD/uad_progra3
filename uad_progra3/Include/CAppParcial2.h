@@ -31,7 +31,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppParcial2();
-	CAppParcial2(int window_width, int window_height);
+	CAppParcial2(int window_width, int window_height, bool fullscreen);
 	~CAppParcial2();
 
 	// --------------------------------------------------------------------------------------------------------------------------
@@ -80,6 +80,10 @@ private:
 	std::vector<unsigned int> mTextureID;
 	unsigned int currentShaderID;
 	unsigned int geometryID;
+
+	double mRotationSpeed = 50.0f;
+	double mCurrentRotation = 0.0f;
+	CVector3 mCurrentPosition{ 0.0f, -20.0f, -15.0f };
 };
 
 #endif // !CAPPPARCIAL2_H

@@ -29,7 +29,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppEmpty();
-	CAppEmpty(int window_width, int window_height);
+	CAppEmpty(int window_width, int window_height, bool fullscreen);
 	~CAppEmpty();
 
 	// --------------------------------------------------------------------------------------------------------------------------

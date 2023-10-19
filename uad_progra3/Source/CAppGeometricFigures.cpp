@@ -11,13 +11,13 @@ using namespace std;
 
 /* */
 CAppGeometricFigures::CAppGeometricFigures() :
-	CAppGeometricFigures(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CAppGeometricFigures(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
 {
 }
 
 /* */
-CAppGeometricFigures::CAppGeometricFigures(int window_width, int window_height) :
-	CApp(window_width, window_height),
+CAppGeometricFigures::CAppGeometricFigures(int window_width, int window_height, bool fullscreen) :
+	CApp(window_width, window_height, fullscreen),
 	m_currentDeltaTime{ 0.0 },
 	m_objectRotation{ 0.0 },
 	m_objectPosition{ -1.5f, 0.0f, 0.0f },

@@ -70,7 +70,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppGeometricFigures();
-	CAppGeometricFigures(int window_width, int window_height);
+	CAppGeometricFigures(int window_width, int window_height, bool fullscreen);
 	~CAppGeometricFigures();
 
 	// --------------------------------------------------------------------------------------------------------------------------

@@ -8,13 +8,13 @@ using namespace std;
 
 /* */
 CAppEmpty::CAppEmpty() :
-	CAppEmpty(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CAppEmpty(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
 {
 }
 
 /* */
-CAppEmpty::CAppEmpty(int window_width, int window_height) :
-	CApp(window_width, window_height)
+CAppEmpty::CAppEmpty(int window_width, int window_height, bool fullscreen) :
+	CApp(window_width, window_height, fullscreen)
 {
 	cout << "Constructor: CAppEmpty(int window_width, int window_height)" << endl;
 

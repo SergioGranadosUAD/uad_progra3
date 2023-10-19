@@ -12,13 +12,13 @@ using namespace std;
 
 /* */
 CAppParcial1::CAppParcial1() :
-	CAppParcial1(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CAppParcial1(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
 {
 }
 
 /* */
-CAppParcial1::CAppParcial1(int window_width, int window_height) :
-	CApp(window_width, window_height)
+CAppParcial1::CAppParcial1(int window_width, int window_height, bool fullscreen) :
+	CApp(window_width, window_height, fullscreen)
 {
 	cout << "Constructor: CAppEmpty(int window_width, int window_height)" << endl;
 

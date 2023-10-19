@@ -39,7 +39,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppObjLoader();
-	CAppObjLoader(int window_width, int window_height);
+	CAppObjLoader(int window_width, int window_height, bool fullscreen);
 	~CAppObjLoader();
 
 	// Inherited methods from CApp

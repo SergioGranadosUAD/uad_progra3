@@ -8,12 +8,12 @@ using namespace std;
 
 /* */
 CApp::CApp():
-	CApp(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CApp(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
 {
 }
 
 /* */
-CApp::CApp(int window_width, int window_height)
+CApp::CApp(int window_width, int window_height, bool fullscreen)
 {
 	cout << "Constructor: CApp(int window_width, int window_height)" << endl; 
 	
@@ -21,7 +21,7 @@ CApp::CApp(int window_width, int window_height)
 	m_OpenGLRenderer = new COpenGLRenderer();
 
 	// Create CGameWindow object
-	m_Window = new CGameWindow(m_OpenGLRenderer, window_width, window_height);
+	m_Window = new CGameWindow(m_OpenGLRenderer, window_width, window_height, fullscreen);
 
 	// Create CGameMenu Object
 	// Menu will be initialized later (menu items added)

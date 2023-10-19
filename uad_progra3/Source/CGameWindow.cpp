@@ -41,19 +41,20 @@ double CGameWindow::stCursorPosY            = 0.0;
 /* Default constructor, uses C++11 'delegate constructor' feature
 */
 CGameWindow::CGameWindow(COpenGLRenderer * renderer) :
-	CGameWindow(renderer, CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CGameWindow(renderer, CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
 {
 }
 
 /* Constructor with specific width/height
 */
-CGameWindow::CGameWindow(COpenGLRenderer * renderer, int width, int height) :
+CGameWindow::CGameWindow(COpenGLRenderer * renderer, int width, int height, bool fullscreen) :
 	m_ReferenceRenderer{ renderer },
 	m_Width{ width }, 
 	m_Height{ height },
 	m_InitializedGLFW{ false },
 	m_CursorPosX{ 0.0 },
-	m_CursorPosY{ 0.0 }
+	m_CursorPosY{ 0.0 },
+	m_Fullscreen{ fullscreen }
 {
 	initializeGLFW();
 }
@@ -119,7 +120,13 @@ bool CGameWindow::create(const char *windowTitle)
 	m_WindowTitle.append(windowTitle);
 
 	/* Create a window */
-	m_Window = glfwCreateWindow(m_Width, m_Height, windowTitle, NULL, NULL);
+	if (m_Fullscreen) {
+		m_Window = glfwCreateWindow(m_Width, m_Height, windowTitle, glfwGetPrimaryMonitor(), NULL);
+	}
+	else {
+		m_Window = glfwCreateWindow(m_Width, m_Height, windowTitle, NULL, NULL);
+	}
+	
 
 	/* If the window cannot be created, return */
 	if (!m_Window)
