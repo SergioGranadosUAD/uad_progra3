@@ -41,6 +41,9 @@ bool Object3D::loadFile(const std::string& fileName) {
 		}
 	}
 
+	if (mUVCoordValues.empty()) {
+		mUVCoordValues.resize(mUvCoordIndexValues.size(), 0);
+	}
 	//Cambiar
 	return true;
 }
@@ -91,7 +94,14 @@ void Object3D::buildFace(std::stringstream& sstream) {
 			currentVertex.vertexIndex = std::stoi(vertexValue);
 
 			getline(vertexStream, vertexValue, '/');
-			currentVertex.uVCoordIndex = std::stoi(vertexValue);
+			if (vertexValue.empty())
+			{
+				currentVertex.uVCoordIndex = 1;
+			}
+			else
+			{
+				currentVertex.uVCoordIndex = std::stoi(vertexValue);
+			}
 
 			getline(vertexStream, vertexValue, '/');
 			currentVertex.normalIndex = std::stoi(vertexValue);

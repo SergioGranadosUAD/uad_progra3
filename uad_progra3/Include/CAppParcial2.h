@@ -7,11 +7,36 @@
 #include "CApp.h"
 #include "Object3D.h"
 #include "CVector3.h"
+#include "Hexagon.h"
+#include <unordered_map>
+
+#define CELL_PADDING 0.05f
+
+using std::vector;
+using std::unordered_map;
 
 // --------------------------------------------------------------------------------------------------------------------------------------
 // Class that inherits from Base class CApp
 // Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
 // --------------------------------------------------------------------------------------------------------------------------------------
+
+struct ModelData
+{
+	unsigned int modelID;
+	unsigned int faceCount;
+};
+
+struct ModelInstance
+{
+	unsigned int modelID;
+	unsigned int faceCount;
+	unsigned int row;
+	unsigned int column;
+	
+	float scale;
+	CVector3 rotation;
+};
+
 class CAppParcial2 : public CApp
 {
 private:
@@ -76,10 +101,24 @@ private:
 	// ------------------------------------------
 	//
 	// ------------------------------------------
+	Hexagon m_hexagonObject;
 	Object3D mObject;
 	std::vector<unsigned int> mTextureID;
 	unsigned int currentShaderID;
 	unsigned int geometryID;
+
+	unsigned int m_cellShaderID;
+	unsigned int m_cellGeometryID;
+	int m_numRows;
+	int m_numColumns;
+	float m_cellSize;
+	string m_cellOrientation;
+	unordered_map<string, ModelData> m_modelIDs;
+	vector<ModelInstance> m_modelInstances;
+
+	const float m_screenAdjustX = -5.f;
+	const float m_screenAdjustY = -20.f;
+	const float m_screenAdjustZ = -25.f;
 
 	double mRotationSpeed = 50.0f;
 	double mCurrentRotation = 0.0f;

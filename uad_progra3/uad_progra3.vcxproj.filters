@@ -162,6 +162,9 @@
     <ClInclude Include="Include\CAppParcial2.h">
       <Filter>Header Files\App</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Hexagon.h">
+      <Filter>Header Files\OBJParser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="Source\CAppParcial2.cpp">
       <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hexagon.cpp">
+      <Filter>Source Files\OBJParser</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

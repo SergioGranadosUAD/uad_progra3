@@ -3,13 +3,17 @@
 #include <iostream>
 using namespace std;
 
+
 #include "windows.h"
 
+#include "../Dependencies/JSON/nlohmann/json.hpp"
 #include "../Include/Globals.h"
 #include "../Include/CAppParcial2.h"
 #include "../Include/Object3D.h"
 #include "../Include/CTextureLoader.h"
 #include "../Include/MathHelper.h"
+
+using nlohmann::json;
 
 /* */
 CAppParcial2::CAppParcial2() :
@@ -51,7 +55,141 @@ CAppParcial2::~CAppParcial2()
 /* */
 void CAppParcial2::initialize()
 {
+	//Leer json
+	json data;
+	ifstream file("Resources/MEDIA/HEXGRID/hexgrid_cfg.json");
 
+	data = json::parse(file);
+
+	m_numColumns = data["HexGrid"]["numCols"];
+	m_numRows = data["HexGrid"]["numRows"];
+	m_cellSize = data["HexGrid"]["cellSize"];
+	string orientation = data["HexGrid"]["orientation"];
+	m_cellOrientation = orientation;
+
+	m_hexagonObject.populateHexagonVectors(m_cellSize, m_cellOrientation);
+
+	m_cellShaderID = getOpenGLRenderer()->getShaderProgramID(SHADER_PROGRAM_COLOR_OBJECT);
+	bool loadedToGraphicsCard;
+	//Cargar geometría del hexagono.
+	loadedToGraphicsCard = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
+		&m_cellShaderID,
+		&m_cellGeometryID,
+		m_hexagonObject.getCellVertices().data(),
+		(int)m_hexagonObject.getCellVertices().size() / 3,
+		m_hexagonObject.getCellNormals().data(),
+		(int)m_hexagonObject.getCellNormals().size() / 3,
+		m_hexagonObject.getCellUVs().data(),
+		(int)m_hexagonObject.getCellUVs().size() / 3,
+		m_hexagonObject.getCellVerticesIndex().data(),
+		(int)m_hexagonObject.getCellVerticesIndex().size() / 3,
+		m_hexagonObject.getCellNormalsIndex().data(),
+		(int)m_hexagonObject.getCellNormalsIndex().size() / 3,
+		m_hexagonObject.getCellUVsIndex().data(),
+		(int)m_hexagonObject.getCellUVsIndex().size() / 3
+	);
+
+	if (!loadedToGraphicsCard) {
+		std::cout << "No funciono :(" << std::endl;
+	}
+
+	//Cargar los objetos en la memoria gráfica.
+	for (auto& obj : data["Models"])
+	{
+		string objectName = obj["name"];
+		string objectPath = obj["filename"];
+
+		unsigned int objectShaderID;
+		unsigned int objectGeometryID;
+
+		Object3D actualObject;
+
+		if (!actualObject.loadFile("Resources/MEDIA/" + objectPath))
+		{
+			cout << "Unable to load 3D model" << endl;
+		}
+		else
+		{
+			std::string materialName;
+
+			//Cambiar por versión local.
+			std::vector<std::string>* materialNameValues = mObject.getMaterialNameValues();
+			for (int i = 0; i < materialNameValues->size(); ++i) {
+				unsigned int textureID;
+				materialName = materialNameValues->at(i);
+				if (CTextureLoader::loadTexture(materialName.c_str(), &textureID, getOpenGLRenderer()))
+				{
+					mTextureID.push_back(textureID);
+				}
+			}
+
+			if (actualObject.hasTextures() && mObject.hasUVs())
+			{
+				// Switch shaders to textured object ones
+				objectShaderID = getOpenGLRenderer()->getShaderProgramID(SHADER_PROGRAM_TEXTURED_OBJECT);
+
+			}
+			else
+			{
+				// Load color shader
+				objectShaderID = getOpenGLRenderer()->getShaderProgramID(SHADER_PROGRAM_COLOR_OBJECT);
+			}
+
+			loadedToGraphicsCard = false;
+
+			unsigned short* sus = actualObject.getUVCoordIndexValues()->data();
+
+			//Cargar geometría
+			loadedToGraphicsCard = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
+				&objectShaderID,
+				&objectGeometryID,
+				actualObject.getVertexValues()->data(),
+				(int)actualObject.getVertexValues()->size() / 3,
+				actualObject.getNormalValues()->data(),
+				(int)actualObject.getNormalValues()->size() / 3,
+				actualObject.getUVCoordValues()->data(),
+				(int)actualObject.getUVCoordValues()->size() / 3,
+				actualObject.getVertexIndexValues()->data(),
+				(int)actualObject.getVertexIndexValues()->size() / 3,
+				actualObject.getNormalIndexValues()->data(),
+				(int)actualObject.getNormalIndexValues()->size() / 3,
+				actualObject.getUVCoordIndexValues()->data(),
+				(int)actualObject.getUVCoordIndexValues()->size() / 3
+			);
+
+			if (loadedToGraphicsCard) 
+			{
+				ModelData dataToSave;
+				dataToSave.modelID = objectGeometryID;
+				dataToSave.faceCount = actualObject.getVertexIndexValues()->size() / 3;
+
+				m_modelIDs.insert({ objectName, dataToSave });
+			}
+			else 
+			{
+				std::cout << "No funciono :(" << std::endl;
+			}
+		}
+
+		
+	}
+
+	for (auto& obj : data["ModelInstances"]) {
+		ModelInstance actualInstance;
+		ModelData retrievedData = m_modelIDs.at(obj["model"]);
+		actualInstance.modelID = retrievedData.modelID;
+		actualInstance.faceCount = retrievedData.faceCount;
+		actualInstance.row = obj["row"];
+		actualInstance.column = obj["column"];
+		actualInstance.scale = obj["scale"];
+		
+		std::vector<float> rotations = obj["rotation"];
+		actualInstance.rotation = CVector3(rotations[0], rotations[1], rotations[2]);
+
+		m_modelInstances.push_back(actualInstance);
+	}
+
+	bool si;
 }
 
 /* */
@@ -85,13 +223,6 @@ void CAppParcial2::update(double deltaTime)
 		return;
 	}
 
-	double degrees = mRotationSpeed * deltaTime * 0.001f;
-
-	mCurrentRotation += degrees;
-
-	if (mCurrentRotation > 360.0f) {
-		mCurrentRotation -= 360.0f;
-	}
 
 	// Update app-specific stuff here
 	// ===============================
@@ -113,23 +244,111 @@ void CAppParcial2::render()
 	}
 	else // Otherwise, render app-specific stuff here...
 	{
-		double mCurrentRadians = mCurrentRotation * PI_OVER_180;
 		// =================================
 		//
 		// =================================
 
+		float initialPosX = -((m_cellSize * m_numRows) * 0.5f ) + m_screenAdjustX;
+		float initialPosY = m_screenAdjustY;
+		float initialPosZ = -((m_cellSize * m_numColumns) * 0.5f) + m_screenAdjustZ;
+
+		for (int col = 0; col < m_numColumns; ++col)
+		{
+			for (int row = 0; row < m_numRows; ++row)
+			{
+				float actualPosX = 0;
+				float actualPosZ = 0;
+
+				if (m_cellOrientation == "pointy")
+				{
+					float width = sqrt(3) * m_cellSize + CELL_PADDING;
+					float height = 1.5f * m_cellSize + CELL_PADDING;
+					actualPosX = initialPosX + (width * row);
+					actualPosZ = initialPosZ + (height * col);
+
+					if (col % 2 != 0)
+					{
+						actualPosX += width * .5f;
+					}
+				}
+				else if(m_cellOrientation == "flat")
+				{
+					float width = 1.5f * m_cellSize + CELL_PADDING;
+					float height = sqrt(3) * m_cellSize + CELL_PADDING;
+					actualPosZ = initialPosZ + (width * col);
+					actualPosX = initialPosX + (height * row);
+
+					if (row % 2 != 0)
+					{
+						actualPosZ += m_cellSize;
+					}
+				}
+				
+				
+				MathHelper::Matrix4 actualPosMatrix = MathHelper::TranslationMatrix(actualPosX, initialPosY, actualPosZ);
+
+				unsigned int cellShader = m_cellShaderID;
+				unsigned int cellVAO = m_cellGeometryID;
+				unsigned int cellTexture = 0;
+				float cellColor[3] = { 2.0f, 2.0f, 2.0f };
+
+				getOpenGLRenderer()->renderObject(
+					&cellShader,
+					&cellVAO,
+					&cellTexture,
+					m_hexagonObject.getCellVerticesIndex().size() / 3,
+					cellColor,
+					&actualPosMatrix,
+					COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
+					false
+				);
+
+				for (auto& instance : m_modelInstances)
+				{
+					if (instance.row == row && instance.column == col)
+					{
+						MathHelper::Matrix4 instanceTranslationRotationMatrix = MathHelper::SimpleModelMatrixRotationTranslation(
+							instance.rotation.getY(),
+							CVector3(actualPosX, initialPosY, actualPosZ)
+						);
+
+						MathHelper::Matrix4 instanceScaleMatrix = MathHelper::ScaleMatrix(instance.scale, instance.scale, instance.scale);
+						MathHelper::Matrix4 finalInstanceMatrix = MathHelper::Multiply(instanceScaleMatrix, instanceTranslationRotationMatrix);
+
+						unsigned int instanceShader = m_cellShaderID;
+						unsigned int instanceVAO = instance.modelID;
+						unsigned int instanceTexture = 0;
+						float instanceColor[3] = { 0.0, 0.0f, 2.0f };
+
+						getOpenGLRenderer()->renderObject(
+							&instanceShader,
+							&instanceVAO,
+							&instanceTexture,
+							instance.faceCount,
+							instanceColor,
+							&finalInstanceMatrix,
+							COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
+							false
+						);
+					}
+				}
+			}
+
+
+		}
+
 		// Get a matrix that has both the object rotation and translation
-		CVector3 objectPosition = mCurrentPosition;
+		/*CVector3 objectPosition = mCurrentPosition;
 		objectPosition.X -= 5.0f;
 
-		MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrixRotationTranslation((float)mCurrentRadians, objectPosition);
+		MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrixRotationTranslation(0, objectPosition);
 		MathHelper::Matrix4 translationMatrix = MathHelper::TranslationMatrix(mCurrentPosition.X, mCurrentPosition.Y, mCurrentPosition.Z);
-		MathHelper::Matrix4 rotationMatrix = MathHelper::RotAroundY(mCurrentRadians);
+		MathHelper::Matrix4 rotationMatrix = MathHelper::RotAroundY(0);
 
 		MathHelper::Matrix4 modelMatrixSoldier = MathHelper::Multiply(rotationMatrix, translationMatrix);
 
-		unsigned int modelShader = currentShaderID;
-		unsigned int modelVAO = geometryID;
+		unsigned int modelShader = m_cellShaderID;
+		unsigned int modelVAO = m_cellGeometryID;
 		unsigned int modelTexture = 0;
 		float color[3] = { 1.0f, 1.0f, 1.0f };
 
@@ -137,7 +356,7 @@ void CAppParcial2::render()
 			&modelShader,
 			&modelVAO,
 			&modelTexture,
-			mObject.getVertexIndexValues()->size() / 3,
+			m_hexagonObject.getCellVerticesIndex().size() / 3,
 			color,
 			&modelMatrixSoldier,
 			COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
@@ -148,12 +367,12 @@ void CAppParcial2::render()
 			&modelShader,
 			&modelVAO,
 			&modelTexture,
-			mObject.getVertexIndexValues()->size() / 3,
+			m_hexagonObject.getCellVerticesIndex().size() / 3,
 			color,
 			&modelMatrix,
 			COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
 			false
-		);
+		);*/
 		
 	}
 }

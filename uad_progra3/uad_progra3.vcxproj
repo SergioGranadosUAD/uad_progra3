@@ -189,6 +189,7 @@
     <ClInclude Include="Include\CVector3.h" />
     <ClInclude Include="Include\CWideStringHelper.h" />
     <ClInclude Include="Include\Globals.h" />
+    <ClInclude Include="Include\Hexagon.h" />
     <ClInclude Include="Include\LoadShaders.h" />
     <ClInclude Include="Include\LoadTGA.h" />
     <ClInclude Include="Include\MathHelper.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Source\COpenGLShaderProgram.cpp" />
     <ClCompile Include="Source\CTextureLoader.cpp" />
     <ClCompile Include="Source\CVector3.cpp" />
+    <ClCompile Include="Source\Hexagon.cpp" />
     <ClCompile Include="Source\LoadShaders.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
