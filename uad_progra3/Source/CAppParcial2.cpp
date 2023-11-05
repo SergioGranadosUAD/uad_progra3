@@ -268,19 +268,19 @@ void CAppParcial2::render()
 
 					if (col % 2 != 0)
 					{
-						actualPosX += width * .5f;
+						actualPosX -= width * .5f;
 					}
 				}
 				else if(m_cellOrientation == "flat")
 				{
 					float width = 1.5f * m_cellSize + CELL_PADDING;
 					float height = sqrt(3) * m_cellSize + CELL_PADDING;
-					actualPosZ = initialPosZ + (width * col);
 					actualPosX = initialPosX + (height * row);
+					actualPosZ = initialPosZ + (width * col);
 
 					if (row % 2 != 0)
 					{
-						actualPosZ += m_cellSize;
+						actualPosZ += width * .5f;
 					}
 				}
 				
@@ -305,7 +305,7 @@ void CAppParcial2::render()
 
 				for (auto& instance : m_modelInstances)
 				{
-					if (instance.row == row && instance.column == col)
+					if (instance.row == col && instance.column == row)
 					{
 						MathHelper::Matrix4 instanceTranslationRotationMatrix = MathHelper::SimpleModelMatrixRotationTranslation(
 							instance.rotation.getY(),
