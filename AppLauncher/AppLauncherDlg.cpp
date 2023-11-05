@@ -301,7 +301,7 @@ void CAppLauncherDlg::OnBnClickedOk()
 
 	CString exeDir;
 	exeDir.Append(m_ProjectDir + L"\\Binaries\\Exe\\" + m_Architecture + L"\\" + m_Configuration + L"\\uad_progra3.exe");
-	exeDir.Append(' ' + resWidth + ' ' + resHeight + ' ' + m_VideoMode + ' ' + m_Class);
+	exeDir.Append(' ' + resWidth + ' ' + resHeight + ' ' + m_VideoMode + ' ' + m_Class + ' ' + m_ProjectDir);
 
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;

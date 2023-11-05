@@ -22,17 +22,20 @@ int main(int argc, char** argv)
 	bool isFullscreen;
 	std::string videoMode;
 	std::string className;
+	std::string projectDir;
 	if (argc > 1) {
 		resWidth = stoi(argv[1]);
 		resHeight = stoi(argv[2]);
 		videoMode = argv[3];
 		className = argv[4];
+		projectDir = argv[5];
 	}
 	else {
 		resWidth = 800;
 		resHeight = 600;
 		videoMode = "Windowed";
 		className = "CAppParcial2";
+		projectDir = "";
 	}
 
 	if (videoMode == "Windowed") {
@@ -57,7 +60,7 @@ int main(int argc, char** argv)
 		app = new CAppParcial1(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
 	}
 	else if (className == "CAppParcial2") {
-		app = new CAppParcial2(resWidth, resHeight, isFullscreen);		// Using pointer to base class, create a new object of DERIVED class
+		app = new CAppParcial2(resWidth, resHeight, isFullscreen, projectDir);		// Using pointer to base class, create a new object of DERIVED class
 	}
 	
 	app->run();							// Run the app

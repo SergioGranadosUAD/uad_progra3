@@ -56,7 +56,7 @@ protected:
 public:
 	// Constructors and destructor
 	CAppParcial2();
-	CAppParcial2(int window_width, int window_height, bool fullscreen);
+	CAppParcial2(int window_width, int window_height, bool fullscreen, string projectDir);
 	~CAppParcial2();
 
 	// --------------------------------------------------------------------------------------------------------------------------
@@ -106,6 +106,7 @@ private:
 	std::vector<unsigned int> mTextureID;
 	unsigned int currentShaderID;
 	unsigned int geometryID;
+	string m_projectDir;
 
 	unsigned int m_cellShaderID;
 	unsigned int m_cellGeometryID;

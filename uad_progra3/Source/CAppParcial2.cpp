@@ -17,13 +17,14 @@ using nlohmann::json;
 
 /* */
 CAppParcial2::CAppParcial2() :
-	CAppParcial2(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false)
+	CAppParcial2(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false, "")
 {
 }
 
 /* */
-CAppParcial2::CAppParcial2(int window_width, int window_height, bool fullscreen) :
-	CApp(window_width, window_height, fullscreen)
+CAppParcial2::CAppParcial2(int window_width, int window_height, bool fullscreen, string projectDir) :
+	CApp(window_width, window_height, fullscreen),
+	m_projectDir(projectDir)
 {
 	cout << "Constructor: CAppEmpty(int window_width, int window_height)" << endl;
 
@@ -55,12 +56,19 @@ CAppParcial2::~CAppParcial2()
 /* */
 void CAppParcial2::initialize()
 {
-	SetCurrentDirectory(L"..\\uad_progra3");
-	system("cd");
+	string filePath;
+	if (!m_projectDir.empty())
+	{
+		filePath = m_projectDir;
+		filePath.append("\\Resources\\MEDIA\\HEXGRID\\hexgrid_cfg.json");
+	}
+	else
+	{
+		filePath = "Resources/MEDIA/HEXGRID/hexgrid_cfg.json";
+	}
 
-	//Leer json (Solo se puede abrir mediante el app launcher. La raiz se vuelve la carpeta del launcher)
 	json data;
-	ifstream file("../uad_progra3/Resources/MEDIA/HEXGRID/hexgrid_cfg.json");
+	ifstream file(filePath);
 
 	data = json::parse(file);
 
@@ -107,7 +115,19 @@ void CAppParcial2::initialize()
 
 		Object3D actualObject;
 
-		if (!actualObject.loadFile("Resources/MEDIA/" + objectPath))
+		string objectFilePath;
+
+		if (!m_projectDir.empty())
+		{
+			objectFilePath = m_projectDir;
+			objectFilePath.append("\\Resources\\MEDIA\\");
+		}
+		else
+		{
+			objectFilePath = "Resources/MEDIA/";
+		}
+
+		if (!actualObject.loadFile(objectFilePath + objectPath))
 		{
 			cout << "Unable to load 3D model" << endl;
 		}
