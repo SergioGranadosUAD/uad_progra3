@@ -10,7 +10,7 @@
 #include "Hexagon.h"
 #include <unordered_map>
 
-#define CELL_PADDING 0.05f
+#define CELL_PADDING 0.1f
 
 using std::vector;
 using std::unordered_map;

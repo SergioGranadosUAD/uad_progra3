@@ -275,12 +275,12 @@ void CAppParcial2::render()
 				{
 					float width = 1.5f * m_cellSize + CELL_PADDING;
 					float height = sqrt(3) * m_cellSize + CELL_PADDING;
-					actualPosX = initialPosX + (height * row);
-					actualPosZ = initialPosZ + (width * col);
+					actualPosX = initialPosX + (width * row);
+					actualPosZ = initialPosZ + (height * col);
 
 					if (row % 2 != 0)
 					{
-						actualPosZ += width * .5f;
+						actualPosZ += height * .5f;
 					}
 				}
 				
