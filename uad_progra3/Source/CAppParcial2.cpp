@@ -55,9 +55,12 @@ CAppParcial2::~CAppParcial2()
 /* */
 void CAppParcial2::initialize()
 {
-	//Leer json
+	SetCurrentDirectory(L"..\\uad_progra3");
+	system("cd");
+
+	//Leer json (Solo se puede abrir mediante el app launcher. La raiz se vuelve la carpeta del launcher)
 	json data;
-	ifstream file("Resources/MEDIA/HEXGRID/hexgrid_cfg.json");
+	ifstream file("../uad_progra3/Resources/MEDIA/HEXGRID/hexgrid_cfg.json");
 
 	data = json::parse(file);
 
