@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CAPPPARCIAL2_H
-#define CAPPPARCIAL2_H
+#ifndef CAPPPARCIAL3_H
+#define CAPPPARCIAL3_H
 
 #include "Globals.h"
 #include "CApp.h"
@@ -21,7 +21,7 @@ using std::unordered_map;
 // Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
 // --------------------------------------------------------------------------------------------------------------------------------------
 
-class CAppParcial2 : public CApp
+class CAppParcial3 : public CApp
 {
 private:
 
@@ -39,9 +39,9 @@ protected:
 
 public:
 	// Constructors and destructor
-	CAppParcial2();
-	CAppParcial2(int window_width, int window_height, bool fullscreen, string projectDir);
-	~CAppParcial2();
+	CAppParcial3();
+	CAppParcial3(int window_width, int window_height, bool fullscreen, string projectDir);
+	~CAppParcial3();
 
 	// --------------------------------------------------------------------------------------------------------------------------
 	// Inherited methods from CApp
@@ -87,7 +87,7 @@ private:
 	// ------------------------------------------
 	Hexagon m_hexagonObject;
 	Object3D mObject;
-	std::vector<unsigned int> mTextureID;
+	vector<unsigned int> mTextureID;
 	unsigned int currentShaderID;
 	unsigned int geometryID;
 	string m_projectDir;
@@ -110,4 +110,4 @@ private:
 	CVector3 mCurrentPosition{ 0.0f, -20.0f, -15.0f };
 };
 
-#endif // !CAPPPARCIAL2_H
+#endif // !CAPPPARCIAL3_H

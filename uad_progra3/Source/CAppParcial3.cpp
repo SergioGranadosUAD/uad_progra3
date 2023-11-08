@@ -8,7 +8,7 @@ using namespace std;
 
 #include "../Dependencies/JSON/nlohmann/json.hpp"
 #include "../Include/Globals.h"
-#include "../Include/CAppParcial2.h"
+#include "../Include/CAppParcial3.h"
 #include "../Include/Object3D.h"
 #include "../Include/CTextureLoader.h"
 #include "../Include/MathHelper.h"
@@ -16,13 +16,13 @@ using namespace std;
 using nlohmann::json;
 
 /* */
-CAppParcial2::CAppParcial2() :
-	CAppParcial2(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false, "")
+CAppParcial3::CAppParcial3() :
+	CAppParcial3(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT, false, "")
 {
 }
 
 /* */
-CAppParcial2::CAppParcial2(int window_width, int window_height, bool fullscreen, string projectDir) :
+CAppParcial3::CAppParcial3(int window_width, int window_height, bool fullscreen, string projectDir) :
 	CApp(window_width, window_height, fullscreen),
 	m_projectDir(projectDir)
 {
@@ -35,7 +35,7 @@ CAppParcial2::CAppParcial2(int window_width, int window_height, bool fullscreen,
 }
 
 /* */
-CAppParcial2::~CAppParcial2()
+CAppParcial3::~CAppParcial3()
 {
 	cout << "Destructor: ~CAppEmpty()" << endl;
 
@@ -65,7 +65,7 @@ CAppParcial2::~CAppParcial2()
 }
 
 /* */
-void CAppParcial2::initialize()
+void CAppParcial3::initialize()
 {
 	string filePath;
 	if (!m_projectDir.empty())
@@ -191,7 +191,7 @@ void CAppParcial2::initialize()
 				(int)actualObject.getUVCoordIndexValues()->size() / 3
 			);
 
-			if (loadedToGraphicsCard) 
+			if (loadedToGraphicsCard)
 			{
 				ModelData dataToSave;
 				dataToSave.modelID = objectGeometryID;
@@ -199,13 +199,13 @@ void CAppParcial2::initialize()
 
 				m_modelIDs.insert({ objectName, dataToSave });
 			}
-			else 
+			else
 			{
 				std::cout << "No funciono :(" << std::endl;
 			}
 		}
 
-		
+
 	}
 
 	for (auto& obj : data["ModelInstances"]) {
@@ -216,7 +216,7 @@ void CAppParcial2::initialize()
 		actualInstance.row = obj["row"];
 		actualInstance.column = obj["column"];
 		actualInstance.scale = obj["scale"];
-		
+
 		std::vector<float> rotations = obj["rotation"];
 		actualInstance.rotation = CVector3(rotations[0], rotations[1], rotations[2]);
 
@@ -227,7 +227,7 @@ void CAppParcial2::initialize()
 }
 
 /* */
-void CAppParcial2::run()
+void CAppParcial3::run()
 {
 	// Check if CGameWindow object AND Graphics API specific Window library have been initialized
 	if (canRun())
@@ -249,7 +249,7 @@ void CAppParcial2::run()
 }
 
 /* */
-void CAppParcial2::update(double deltaTime)
+void CAppParcial3::update(double deltaTime)
 {
 	// Do not update if delta time is < 0
 	if (deltaTime <= 0.0f)
@@ -265,7 +265,7 @@ void CAppParcial2::update(double deltaTime)
 }
 
 /* */
-void CAppParcial2::render()
+void CAppParcial3::render()
 {
 	CGameMenu* menu = getMenu();
 
@@ -282,7 +282,7 @@ void CAppParcial2::render()
 		//
 		// =================================
 
-		float initialPosX = -((m_cellSize * m_numRows) * 0.5f ) + m_screenAdjustX;
+		float initialPosX = -((m_cellSize * m_numRows) * 0.5f) + m_screenAdjustX;
 		float initialPosY = m_screenAdjustY;
 		float initialPosZ = -((m_cellSize * m_numColumns) * 0.5f) + m_screenAdjustZ;
 
@@ -305,7 +305,7 @@ void CAppParcial2::render()
 						actualPosX -= width * .5f;
 					}
 				}
-				else if(m_cellOrientation == "flat")
+				else if (m_cellOrientation == "flat")
 				{
 					float width = 1.5f * m_cellSize + CELL_PADDING;
 					float height = sqrt(3) * m_cellSize + CELL_PADDING;
@@ -317,8 +317,8 @@ void CAppParcial2::render()
 						actualPosZ += height * .5f;
 					}
 				}
-				
-				
+
+
 				MathHelper::Matrix4 actualPosMatrix = MathHelper::TranslationMatrix(actualPosX, initialPosY, actualPosZ);
 
 				unsigned int cellShader = m_cellShaderID;
@@ -407,12 +407,12 @@ void CAppParcial2::render()
 			COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
 			false
 		);*/
-		
+
 	}
 }
 
 /* */
-void CAppParcial2::onMouseMove(float deltaX, float deltaY)
+void CAppParcial3::onMouseMove(float deltaX, float deltaY)
 {
 	// Update app-specific stuff when mouse moves here 
 	// ===============================================
@@ -421,7 +421,7 @@ void CAppParcial2::onMouseMove(float deltaX, float deltaY)
 }
 
 /* */
-void CAppParcial2::executeMenuAction()
+void CAppParcial3::executeMenuAction()
 {
 	if (getMenu() != NULL)
 	{
@@ -432,7 +432,7 @@ void CAppParcial2::executeMenuAction()
 	}
 }
 
-void CAppParcial2::onF2(int mods) {
+void CAppParcial3::onF2(int mods) {
 	setMenuActive(true);
 
 	std::wstring wideStringBuffer = L"";

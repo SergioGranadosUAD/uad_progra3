@@ -138,13 +138,14 @@ BOOL CAppLauncherDlg::OnInitDialog()
 	m_ConfigCBoxCtrl.SetCurSel(0);
 	
 
+	m_ClassCBoxCtrl.AddString(L"CAppParcial3");
 	m_ClassCBoxCtrl.AddString(L"CAppParcial2");
 	m_ClassCBoxCtrl.AddString(L"CAppParcial1");
 	m_ClassCBoxCtrl.AddString(L"CAppEmpty");
 	m_ClassCBoxCtrl.AddString(L"CAppCubeTest");
 	m_ClassCBoxCtrl.AddString(L"CAppGeometricFigures");
 	m_ClassCBoxCtrl.AddString(L"CAppObjLoader");
-	m_ClassCBoxCtrl.SetCurSel(5);
+	m_ClassCBoxCtrl.SetCurSel(6);
 	
 
 	return TRUE;  // Devuelve TRUE  a menos que establezca el foco en un control

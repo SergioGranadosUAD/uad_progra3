@@ -14,6 +14,7 @@ using namespace std;
 #include "Include/CAppEmpty.h"
 #include "Include/CAppParcial1.h"
 #include "Include/CAppParcial2.h"
+#include "Include/CAppParcial3.h"
 
 int main(int argc, char** argv)
 {
@@ -34,7 +35,7 @@ int main(int argc, char** argv)
 		resWidth = 800;
 		resHeight = 600;
 		videoMode = "Windowed";
-		className = "CAppParcial2";
+		className = "CAppParcial3";
 		projectDir = "";
 	}
 
@@ -61,6 +62,9 @@ int main(int argc, char** argv)
 	}
 	else if (className == "CAppParcial2") {
 		app = new CAppParcial2(resWidth, resHeight, isFullscreen, projectDir);		// Using pointer to base class, create a new object of DERIVED class
+	}
+	else if (className == "CAppParcial3") {
+		app = new CAppParcial3(resWidth, resHeight, isFullscreen, projectDir);		// Using pointer to base class, create a new object of DERIVED class
 	}
 	
 	app->run();							// Run the app
