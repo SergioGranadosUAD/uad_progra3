@@ -9,10 +9,16 @@
 #include "CVector3.h"
 #include "Hexagon.h"
 #include "Structs.h"
+#include "AABB_2D.h"
+#include "CCamera.h"
+#include "Plane.h"
+#include "QuadTree.h"
+#include "../Dependencies/JSON/nlohmann/json.hpp"
 #include <unordered_map>
 
 #define CELL_PADDING 0.1f
 
+using nlohmann::json;
 using std::vector;
 using std::unordered_map;
 
@@ -77,6 +83,10 @@ public:
 	//
 	// -----------------------------------------
 	void onF2(int mods) override;
+	void onArrowUp(int mods) override;
+	void onArrowDown(int mods) override;
+	void onArrowLeft(int mods) override;
+	void onArrowRight(int mods) override;
 
 private:
 
@@ -85,6 +95,12 @@ private:
 	// ------------------------------------------
 	//
 	// ------------------------------------------
+
+	void loadHexagonObject();
+	void loadObjectsToGraphicMemory(json& data);
+	void loadObjectInstances(json& data);
+	void setupHexgrid();
+
 	Hexagon m_hexagonObject;
 	Object3D mObject;
 	vector<unsigned int> mTextureID;
@@ -100,10 +116,15 @@ private:
 	string m_cellOrientation;
 	unordered_map<string, ModelData> m_modelIDs;
 	vector<ModelInstance> m_modelInstances;
+	vector<Hex*> m_hexGrid;
+	Camera* m_camera;
+	AABB_2D m_initialAABB;
+	QuadTree m_renderQuadTree;
 
 	const float m_screenAdjustX = -5.f;
 	const float m_screenAdjustY = -20.f;
 	const float m_screenAdjustZ = -25.f;
+	const float m_movementSpeed = 0.1f;
 
 	double mRotationSpeed = 50.0f;
 	double mCurrentRotation = 0.0f;

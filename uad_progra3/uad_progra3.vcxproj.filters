@@ -171,6 +171,24 @@
     <ClInclude Include="Include\Structs.h">
       <Filter>Header Files\OBJParser</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Plane.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AABB_2D.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\QuadTree.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CCamera.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Frustum.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\QuadTreeNode.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -253,6 +271,24 @@
     </ClCompile>
     <ClCompile Include="Source\CAppParcial3.cpp">
       <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Plane.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AABB_2D.cpp">
+      <Filter>Source Files\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QuadTree.cpp">
+      <Filter>Source Files\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCamera.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Frustum.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QuadTreeNode.cpp">
+      <Filter>Source Files\DataStructures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

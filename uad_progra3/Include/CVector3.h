@@ -39,6 +39,8 @@ public:
 	void normalize();
 	float magnitude();
 
+	static CVector3 getMidPoint(CVector3 firstPoint, CVector3 secondPoint);
+
 	inline static CVector3 ZeroVector()
 	{
 		return CVector3(0.0f, 0.0f, 0.0f);

@@ -199,6 +199,11 @@ float CVector3::magnitude()
 	//return sqrt(len);
 }
 
+CVector3 CVector3::getMidPoint(CVector3 firstPoint, CVector3 secondPoint)
+{
+	return (firstPoint + secondPoint) * .5f;
+}
+
 /*
 */
 void CVector3::setValues(float _x, float _y, float _z)
